@@ -11,25 +11,67 @@ body {
     color: #ffffff;
     overflow-x: hidden; /* Evita scroll horizontal */
 }
+/* --- CARRUSEL DE FRASES --- */
+.slider {
+    position: relative;
+    height: 120px; /* Altura fija para que no salte */
+    overflow: hidden; /* Lo que se salga se oculta */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.slides {
+    width: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado perfecto */
+    width: 100%;
+    opacity: 0; /* Invisibles por defecto */
+    animation: rotarFrases 16s infinite; /* 16s total (4 frases x 4 seg) */
+}
+
+/* Lógica de la animación:
+   Cada frase aparece en un momento distinto del tiempo (delay)
+*/
+.slide:nth-child(1) { animation-delay: 0s; }
+.slide:nth-child(2) { animation-delay: 4s; }
+.slide:nth-child(3) { animation-delay: 8s; }
+.slide:nth-child(4) { animation-delay: 12s; }
+
+@keyframes rotarFrases {
+    0% { opacity: 0; transform: translate(-50%, -40%); } /* Entra desde abajo */
+    5% { opacity: 1; transform: translate(-50%, -50%); } /* Se queda quieto y visible */
+    20% { opacity: 1; transform: translate(-50%, -50%); } /* Sigue visible */
+    25% { opacity: 0; transform: translate(-50%, -60%); } /* Se va hacia arriba */
+    100% { opacity: 0; }
+}
 /* --- SECCIÓN HERO (PORTADA) --- */
 .hero {
-    height: 100vh; /* Ocupa toda la pantalla */
+    /* ANTES DECÍA: height: 100vh; */
+    
+    /* AHORA PON ESTO: */
+    min-height: 100vh; /* Mínimo el tamaño de la pantalla */
+    height: auto;      /* Pero si hay mucho contenido, que crezca */
+    
+    /* El resto déjalo igual... */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
-
-    /* --- AQUÍ PONES TU IMAGEN DE FONDO --- */
-    /* 1. Guarda tu imagen en la carpeta 'img' */
-    /* 2. Asegúrate que el nombre coincida abajo (ej: fondo.jpg) */
-    /* El linear-gradient es una sombra negra transparente para que el texto se lea bien sobre la foto */
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/gojoFondo.jpg');
-    
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Efecto parallax elegante */
+    background-attachment: fixed;
+    
+    /* Agrega esto para que no se pegue al borde de abajo */
+    padding-bottom: 50px; 
+    padding-top: 50px;
 }
 
 .hero-content {
@@ -201,13 +243,7 @@ footer {
     .container { padding: 50px 20px; }
 }
 
----
 
-### Paso 3: Agrega el CSS (`style.css`)
-
-Copia este código y pégalo al final de tu archivo `style.css`, justo antes del bloque de `<footer>` y del `@media`.
-
-```css
 /* --- NUEVA SECCIÓN: COLLAGE DE ANIME --- */
 .anime-section {
     padding: 80px 20px;
@@ -220,7 +256,24 @@ Copia este código y pégalo al final de tu archivo `style.css`, justo antes del
     margin-top: -30px;
     margin-bottom: 40px;
 }
+/* --- AJUSTE PARA EL CORAZÓN EN EL HERO (ENCABEZADO) --- */
 
+/* Esto selecciona la tarjeta de corazón SOLO cuando está dentro del hero-content */
+.hero-content .heart-item {
+    /* Reseteamos las propiedades de la cuadrícula anterior */
+    grid-column: auto !important;
+    grid-row: auto !important;
+    
+    /* --- AQUÍ CONTROLAS EL TAMAÑO --- */
+    width: 180px;  /* Puedes cambiar este número si lo quieres más grande o chico */
+    height: 180px; /* Mantén el mismo número que arriba para que sea cuadrado */
+    
+    /* Centramos el corazón horizontalmente y le damos espacio arriba y abajo */
+    margin: 30px auto; 
+    
+    /* Nos aseguramos de que se comporte como un bloque para poder centrarlo */
+    display: block; 
+}
 /* La cuadrícula mágica */
 .collage-grid {
     display: grid;
@@ -309,4 +362,140 @@ Copia este código y pégalo al final de tu archivo `style.css`, justo antes del
     .anime-item.wide {
         grid-column: span 1;
     }
+}
+.heart-item {
+    grid-column: span 2;
+    grid-row: span 2;
+    background: transparent !important; /* Quitamos fondo oscuro */
+    border: none !important; /* Quitamos borde estándar */
+    box-shadow: none !important; /* Quitamos sombra estándar */
+    /* Centramos el contenido */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Desactivamos el efecto hover estándar de los animes */
+    pointer-events: none;
+}
+
+/* 2. El contenedor donde ocurre la magia del recorte */
+.heart-mask {
+    width: 90%;
+    height: 90%;
+    position: relative;
+    /* Reactivamos interacción solo en el corazón */
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+
+    /* --- EL TRUCO DEL CORAZÓN (SVG MASK) --- */
+    /* Esto "recorta" la imagen usando una forma vectorial invisible */
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' width='100' title='heart' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z' /%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' width='100' title='heart' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z' /%3E%3C/svg%3E");
+    
+    /* Aseguramos que la máscara se centre y no se repita */
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+
+    /* Agregamos un resplandor morado/rosa alrededor del corazón */
+    filter: drop-shadow(0 0 15px rgba(255, 0, 128, 0.8));
+    animation: latido 2s infinite ease-in-out;
+}
+
+/* La imagen dentro del corazón */
+.heart-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la foto llene el corazón sin deformarse */
+}
+
+/* Efecto hover especial para el corazón: se agranda más */
+.heart-mask:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 25px rgba(255, 0, 128, 1));
+}
+
+/* Animación opcional de latido */
+@keyframes latido {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* --- TARJETA DE ESTADÍSTICAS (HECHICERA) --- */
+.stats-container {
+    background: rgba(20, 20, 20, 0.8); /* Fondo oscuro semitransparente */
+    border: 2px solid #7000FF; /* Borde morado brillante */
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 450px; /* Ancho máximo para que no se vea enorme */
+    
+    margin: 30px auto 80px auto;
+    backdrop-filter: blur(10px); /* Efecto de desenfoque detrás */
+    box-shadow: 0 0 20px rgba(112, 0, 255, 0.3); /* Resplandor suave */
+    text-align: left; /* El texto dentro va alineado a la izquierda */
+}
+
+.stats-container h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #7000FF;
+}
+
+.stat-row {
+    margin-bottom: 20px;
+}
+
+.stat-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #E0E0E0;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Fondo de la barra (el riel gris) */
+.progress-bg {
+    height: 12px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #444;
+}
+
+/* La barra de progreso animada */
+.progress-bar {
+    height: 100%;
+    border-radius: 10px;
+    /* Gradiente de azul a morado */
+    background: linear-gradient(90deg, #00C2FF, #7000FF);
+    box-shadow: 0 0 10px rgba(0, 194, 255, 0.7);
+    /* Animación de carga al entrar */
+    animation: cargarBarra 2s ease-out forwards;
+    transform-origin: left;
+}
+
+@keyframes cargarBarra {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+/* Barra especial para el "Infinito" */
+.bar-infinity {
+    width: 100%;
+    background: linear-gradient(90deg, #7000FF, #FF0080, #7000FF);
+    background-size: 200% 100%;
+    animation: flujoInfinito 2s linear infinite;
+}
+
+@keyframes flujoInfinito {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
 }

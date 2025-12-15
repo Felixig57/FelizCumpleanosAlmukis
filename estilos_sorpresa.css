@@ -25,7 +25,7 @@ body {
     /* 1. Guarda tu imagen en la carpeta 'img' */
     /* 2. Asegúrate que el nombre coincida abajo (ej: fondo.jpg) */
     /* El linear-gradient es una sombra negra transparente para que el texto se lea bien sobre la foto */
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('gojoFondo.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/gojoFondo.jpg');
     
     background-size: cover;
     background-position: center;

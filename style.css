@@ -1,0 +1,202 @@
+/* RESET BÁSICO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0a0a0a; /* Fondo negro minimalista */
+    color: #ffffff;
+    overflow-x: hidden; /* Evita scroll horizontal */
+}
+
+/* --- SECCIÓN HERO (PORTADA) --- */
+.hero {
+    height: 100vh; /* Ocupa toda la pantalla */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+
+    /* --- AQUÍ PONES TU IMAGEN DE FONDO --- */
+    /* 1. Guarda tu imagen en la carpeta 'img' */
+    /* 2. Asegúrate que el nombre coincida abajo (ej: fondo.jpg) */
+    /* El linear-gradient es una sombra negra transparente para que el texto se lea bien sobre la foto */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/fondo.jpg');
+    
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efecto parallax elegante */
+}
+
+.hero-content {
+    z-index: 2;
+    padding: 20px;
+    max-width: 800px;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif; /* Fuente futurista */
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+    color: #fff;
+    /* Efecto de resplandor morado estilo Jujutsu Kaisen */
+    text-shadow: 0 0 15px #7000FF; 
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: #00C2FF; /* Azul eléctrico */
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+/* Estilo de la Frase de Gojo */
+.quote-box {
+    background: rgba(255, 255, 255, 0.05); /* Muy sutil */
+    padding: 25px;
+    border-left: 4px solid #7000FF;
+    backdrop-filter: blur(4px); /* Efecto borroso detrás */
+    margin: 0 auto;
+    border-radius: 0 10px 10px 0;
+}
+
+.quote-box p {
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.quote-box span {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* --- SECCIONES COMUNES --- */
+.container {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    display: inline-block;
+    border-bottom: 3px solid #7000FF;
+    padding-bottom: 10px;
+}
+
+/* --- TARJETAS (GRID) --- */
+.grid-cards {
+    display: grid;
+    /* Esto hace que sea responsive automáticamente */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    gap: 30px;
+}
+
+.card {
+    background: #141414;
+    padding: 40px 20px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Sube un poco al pasar el mouse */
+    border-color: #00C2FF;
+    box-shadow: 0 10px 30px rgba(0, 194, 255, 0.15);
+}
+
+.icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    margin-bottom: 15px;
+    color: #eee;
+    font-weight: 700;
+}
+
+.card p {
+    color: #bbb;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* --- GALERÍA POLAROID --- */
+.gallery-section {
+    background: #111;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.polaroid {
+    background: #fff;
+    padding: 15px 15px 50px 15px;
+    color: #333;
+    width: 280px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    transition: transform 0.4s ease;
+}
+
+.polaroid img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #eee;
+}
+
+.caption {
+    margin-top: 15px;
+    font-family: 'Montserrat', sans-serif; /* Tipo letra como escrita a mano si quisieras */
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #222;
+}
+
+/* Rotaciones para realismo */
+.rotate-left { transform: rotate(-3deg); }
+.rotate-right { transform: rotate(3deg); }
+.rotate-center { transform: rotate(1deg); }
+
+.polaroid:hover {
+    transform: scale(1.1) rotate(0deg);
+    z-index: 10;
+    box-shadow: 0 15px 30px rgba(112, 0, 255, 0.4); /* Sombra morada al hacer hover */
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 0.9rem;
+    background-color: #050505;
+}
+
+/* --- AJUSTES PARA CELULAR --- */
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    .quote-box { width: 95%; }
+    .container { padding: 50px 20px; }
+}
